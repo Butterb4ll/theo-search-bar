@@ -40,11 +40,13 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
-            height: 37px;
+            min-height: 37px;
+            display: flex;
+            align-items: center;
         }
         
         #search-container {
-            float: right;
+            margin-left: auto;
             line-height: 30px;
         }
         
@@ -220,14 +222,45 @@
         }
         
         /* Responsive styles */
+        @media (max-width: 480px) {
+            .search-input-wrapper {
+                width: 180px;
+                height: 32px;
+            }
+
+            .auto-button {
+                padding: 4px 5px 4px 8px;
+                font-size: 11px;
+            }
+
+            .search-text-box {
+                font-size: 12px;
+            }
+
+            .search-text-box:focus {
+                font-size: 13px;
+            }
+
+            .search-button {
+                width: 32px;
+                height: 32px;
+                padding: 6px;
+            }
+
+            .chat-options {
+                width: 180px;
+            }
+        }
+
         @media (max-width: 600px) {
             #search-form form {
                 flex-direction: row;
                 justify-content: center;
+                gap: 4px;
             }
 
             .search-input-wrapper {
-                width: 240px;
+                width: 220px;
             }
 
             .auto-button {
@@ -244,24 +277,18 @@
             }
 
             .chat-options {
-                width: 240px;
-            }
-
-            #search-container {
-                margin-top: 4px;
+                width: 220px;
             }
         }
 
         @media (max-width: 767px) {
-            #search-container {
-                float: none !important;
-                display: flex;
-                justify-content: center;
-                padding: 10px;
+            .container {
+                min-height: 44px;
             }
 
-            #search-form {
-                display: inline-block;
+            #search-container {
+                margin-left: auto;
+                margin-right: 0;
             }
         }
 
