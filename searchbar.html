@@ -227,10 +227,28 @@
         @media (max-width: 600px) {
             #search-form form {
                 flex-direction: row;
+                justify-content: center;
             }
 
             .search-input-wrapper {
-                width: 200px;
+                width: 240px;
+            }
+
+            .auto-button {
+                padding: 5px 6px 5px 10px;
+                font-size: 12px;
+            }
+
+            .search-text-box {
+                font-size: 13px;
+            }
+
+            .search-text-box:focus {
+                font-size: 14px;
+            }
+
+            .chat-options {
+                width: 240px;
             }
 
             #search-container {
@@ -241,8 +259,13 @@
         @media (max-width: 767px) {
             #search-container {
                 float: none !important;
-                text-align: center;
+                display: flex;
+                justify-content: center;
                 padding: 10px;
+            }
+
+            #search-form {
+                display: inline-block;
             }
         }
 
