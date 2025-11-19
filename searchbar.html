@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Bar Only</title>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", sans-serif;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        /* Top bar styles */
+        .top-bar {
+            min-height: 30px;
+            background: #25292C;
+            border-bottom: 1px solid #414f5a;
+            padding: 7px 0;
+            position: relative;
+            width: 100%;
+            display: block;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            height: 37px;
+        }
+        
+        #search-container {
+            float: right;
+            line-height: 30px;
+        }
+        
+        /* Search form styles */
+        #search-form form {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Auto button styles */
+        .auto-button-container {
+            position: relative;
+        }
+        
+        .auto-button {
+            background: linear-gradient(90deg, #3a3a3a 0%, #4a4a4a 100%);
+            color: #fff;
+            border: none;
+            padding: 3px 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 20px;
+            width: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s ease, transform 0.1s ease;
+        }
+        
+        .auto-button:hover {
+            background: linear-gradient(90deg, #333 0%, #444 100%);
+            transform: scale(1.02);
+        }
+        
+        .auto-button:active {
+            transform: scale(0.98);
+        }
+        
+        .button-text {
+            width: 60px;
+            text-align: center;
+        }
+        
+        /* Chat options dropdown */
+        .chat-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            margin-top: 6px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+            line-height: 1em;
+        }
+        
+        .chat-options.active {
+            max-height: 300px;
+            opacity: 1;
+        }
+        
+        .chat-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        
+        .chat-option:hover {
+            background: #2a2a2a;
+        }
+        
+        .chat-option.selected {
+            background: #333;
+        }
+        
+        .chat-option .title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        .chat-option .description {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+        
+        /* Search input */
+        .search-text-box {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #333;
+            background: #fff;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgpMwidZAAABaklEQVQoFY2SvUoDQRSFz8zs7CZRUNBCsLATBEFQsLCwsLAQBBsLC8HCF7DxBXwAHyDYWFjYiIWFhYUgFoKIYBEQxB8QFBWN2d2Z8dwZd5NsfOFwz7nnzty5M0tEBKZpkkI6bKFQEJqmUT6fZ4FAIESMVRAsy7JKpRJbVCqViud5LhaLRZqenkYEomlC07Q4BBhjQUgsFhOcc4IgCMT3/aCu6waMCSHgnEsulyuyaDS6srm5ORqJRO7L5fJMKpW6ikajJ8lk8mg4HG40EokkDMN4ZowdFovFBc75ued5F7Ztv0L3YZqmNzw8/DA4OPgej8ffBgYGnpaWlm4YpVKpOsuyXhOJxLvv+w7vBGRZluO6rqPr+quqqo/9/f3PnU6ns1AoxOPx+OX29vZoT0/PfSaT2enu7j7d29u7hEg8z/MZRFFVtQ7RNG0xm80uIxqiKIqH8g/lcjnGGKt/8h8wDMNut9ttSZJk+C/8A6ZP6d8fF5p5AAAAAElFTkSuQmCC');
+            background-position: 8px 50%;
+            background-repeat: no-repeat;
+            color: #777;
+            border-radius: 30px;
+            width: 300px;
+            height: 36px;
+            margin: 0;
+            padding: 0 15px 1px 30px;
+            box-shadow: none;
+        }
+        
+        .search-text-box:focus {
+            font-size: 18px;
+            color: #777;
+            cursor: text;
+            outline: none;
+        }
+        
+        /* Search button */
+        .search-button {
+            background: linear-gradient(135deg, #0488cd 0%, #0371a8 100%);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(4, 136, 205, 0.3);
+            width: 36px;
+            height: 36px;
+        }
+        
+        .search-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(4, 136, 205, 0.4);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            #search-form form {
+                flex-direction: row;
+            }
+            
+            .search-text-box {
+                width: 200px;
+            }
+            
+            #search-container {
+                margin-top: 4px;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            #search-container {
+                float: none !important;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+        
+        @media (min-width: 980px) {
+            .search-text-box:focus {
+                width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header Start -->
+    <div class="main-header" id="sticky-header">
+        <div class="top-bar">
+            <div class="container">
+                <div id="live-button-container"></div>
+                
+                <div id="search-container">
+                    <div id="search-form">
+                        <form action="https://www.cgg.org/index.cfm/search/results" method="get" id="ask-search-form">
+                            <div class="auto-button-container">
+                                <button type="button" class="auto-button">
+                                    <span class="button-text">Auto</span>
+                                </button>
+                                <div class="chat-options">
+                                    <div class="chat-option" data-mode="ask" data-url="https://ask.cgg.org">
+                                        <div>
+                                            <div class="title">Ask</div>
+                                            <div class="description">Ask Theophilus, the cgg.org research assistant.</div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-option" data-mode="search" data-url="https://www.cgg.org/index.cfm/search/results">
+                                        <div>
+                                            <div class="title">Search</div>
+                                            <div class="description">Search cgg.org. Powered by Google</div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-option selected" data-mode="auto" data-url="https://www.cgg.org/index.cfm/search/results">
+                                        <div>
+                                            <div class="title">Auto</div>
+                                            <div class="description">Combine asking Theophilus and site search for comprehensive results.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" class="search-text-box" name="q" id="search-title" autocomplete="off">
+                            <input type="hidden" name="rid" id="rid">
+                            <input type="hidden" name="rct" id="rct">
+                            <input type="hidden" name="mode" value="auto">
+                            <button type="submit" class="search-button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12H19M12 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Header End -->
+    
+    <script>
+        // Mode selector functionality
+        const autoButton = document.querySelector('.auto-button');
+        const buttonText = document.querySelector('.button-text');
+        const chatOptions = document.querySelector('.chat-options');
+        const form = document.getElementById('ask-search-form');
+        const modeInput = form.querySelector('input[name="mode"]');
+
+        // Load saved mode from LocalStorage on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('selectedMode') || 'auto';
+            const savedOption = document.querySelector(`.chat-option[data-mode="${savedMode}"]`);
+            if (savedOption) {
+                document.querySelectorAll('.chat-option').forEach(opt => opt.classList.remove('selected'));
+                savedOption.classList.add('selected');
+                buttonText.textContent = savedMode.charAt(0).toUpperCase() + savedMode.slice(1);
+                form.action = savedOption.dataset.url;
+                modeInput.value = savedMode;
+            }
+        });
+
+        autoButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            chatOptions.classList.toggle('active');
+        });
+
+        // Close the menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!autoButton.contains(event.target) && !chatOptions.contains(event.target)) {
+                chatOptions.classList.remove('active');
+            }
+        });
+
+        // Handle chat option selection
+        document.querySelectorAll('.chat-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.chat-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                const mode = option.dataset.mode;
+                buttonText.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+                form.action = option.dataset.url;
+                modeInput.value = mode;
+                localStorage.setItem('selectedMode', mode);
+                chatOptions.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
