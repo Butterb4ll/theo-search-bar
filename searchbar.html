@@ -54,40 +54,53 @@
             align-items: center;
             gap: 5px;
         }
-        
+
+        /* Search input wrapper - contains both button and input */
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 30px;
+            width: 300px;
+            height: 36px;
+            border: 1px solid #333;
+        }
+
         /* Auto button styles */
         .auto-button-container {
             position: relative;
         }
-        
+
         .auto-button {
             background: linear-gradient(90deg, #3a3a3a 0%, #4a4a4a 100%);
             color: #fff;
             border: none;
-            padding: 3px 8px;
-            font-size: 14px;
+            padding: 6px 8px 6px 12px;
+            font-size: 13px;
             font-weight: 500;
             border-radius: 20px;
-            width: 60px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: background 0.3s ease, transform 0.1s ease;
+            gap: 4px;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+            margin-left: 4px;
         }
-        
+
         .auto-button:hover {
             background: linear-gradient(90deg, #333 0%, #444 100%);
-            transform: scale(1.02);
         }
-        
-        .auto-button:active {
-            transform: scale(0.98);
-        }
-        
+
         .button-text {
-            width: 60px;
             text-align: center;
+        }
+
+        .caret-icon {
+            width: 10px;
+            height: 10px;
+            fill: #fff;
         }
         
         /* Chat options dropdown */
@@ -117,22 +130,41 @@
             padding: 12px 16px;
             cursor: pointer;
             transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
+
         .chat-option:hover {
             background: #2a2a2a;
         }
-        
+
         .chat-option.selected {
             background: #333;
         }
-        
+
+        .check-icon {
+            width: 16px;
+            height: 16px;
+            fill: #0488cd;
+            flex-shrink: 0;
+            opacity: 0;
+        }
+
+        .chat-option.selected .check-icon {
+            opacity: 1;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
         .chat-option .title {
             font-size: 14px;
             font-weight: 500;
             color: #fff;
         }
-        
+
         .chat-option .description {
             font-size: 12px;
             color: #aaa;
@@ -141,27 +173,31 @@
         
         /* Search input */
         .search-text-box {
-            padding: 8px 12px;
+            flex: 1;
+            padding: 8px 35px 8px 12px;
             font-size: 14px;
-            border: 1px solid #333;
-            background: #fff;
+            border: none;
+            background: transparent;
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgpMwidZAAABaklEQVQoFY2SvUoDQRSFz8zs7CZRUNBCsLATBEFQsLCwsLAQBBsLC8HCF7DxBXwAHyDYWFjYiIWFhYUgFoKIYBEQxB8QFBWN2d2Z8dwZd5NsfOFwz7nnzty5M0tEBKZpkkI6bKFQEJqmUT6fZ4FAIESMVRAsy7JKpRJbVCqViud5LhaLRZqenkYEomlC07Q4BBhjQUgsFhOcc4IgCMT3/aCu6waMCSHgnEsulyuyaDS6srm5ORqJRO7L5fJMKpW6ikajJ8lk8mg4HG40EokkDMN4ZowdFovFBc75ued5F7Ztv0L3YZqmNzw8/DA4OPgej8ffBgYGnpaWlm4YpVKpOsuyXhOJxLvv+w7vBGRZluO6rqPr+quqqo/9/f3PnU6ns1AoxOPx+OX29vZoT0/PfSaT2enu7j7d29u7hEg8z/MZRFFVtQ7RNG0xm80uIxqiKIqH8g/lcjnGGKt/8h8wDMNut9ttSZJk+C/8A6ZP6d8fF5p5AAAAAElFTkSuQmCC');
             background-position: 8px 50%;
             background-repeat: no-repeat;
             color: #777;
             border-radius: 30px;
-            width: 300px;
-            height: 36px;
+            height: 100%;
             margin: 0;
-            padding: 0 15px 1px 30px;
+            padding-left: 30px;
             box-shadow: none;
         }
-        
+
         .search-text-box:focus {
-            font-size: 18px;
+            font-size: 15px;
             color: #777;
             cursor: text;
             outline: none;
+        }
+
+        .search-input-wrapper:focus-within {
+            box-shadow: 0 0 0 2px rgba(4, 136, 205, 0.2);
         }
         
         /* Search button */
@@ -192,16 +228,16 @@
             #search-form form {
                 flex-direction: row;
             }
-            
-            .search-text-box {
+
+            .search-input-wrapper {
                 width: 200px;
             }
-            
+
             #search-container {
                 margin-top: 4px;
             }
         }
-        
+
         @media (max-width: 767px) {
             #search-container {
                 float: none !important;
@@ -209,15 +245,19 @@
                 padding: 10px;
             }
         }
-        
+
         @media (min-width: 768px) {
             .container {
                 padding: 0 30px;
             }
         }
-        
+
         @media (min-width: 980px) {
-            .search-text-box:focus {
+            .search-input-wrapper {
+                transition: width 0.3s ease;
+            }
+
+            .search-input-wrapper:focus-within {
                 width: 500px;
             }
         }
@@ -233,32 +273,46 @@
                 <div id="search-container">
                     <div id="search-form">
                         <form action="https://www.cgg.org/index.cfm/search/results" method="get" id="ask-search-form">
-                            <div class="auto-button-container">
-                                <button type="button" class="auto-button">
-                                    <span class="button-text">Auto</span>
-                                </button>
-                                <div class="chat-options">
-                                    <div class="chat-option" data-mode="ask" data-url="https://ask.cgg.org">
-                                        <div>
-                                            <div class="title">Ask</div>
-                                            <div class="description">Ask Theophilus, the cgg.org research assistant.</div>
+                            <div class="search-input-wrapper">
+                                <div class="auto-button-container">
+                                    <button type="button" class="auto-button">
+                                        <span class="button-text">Auto</span>
+                                        <svg class="caret-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <div class="chat-options">
+                                        <div class="chat-option" data-mode="ask" data-url="https://ask.cgg.org">
+                                            <svg class="check-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13.5 3.5L6 11 2.5 7.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="option-content">
+                                                <div class="title">Ask</div>
+                                                <div class="description">Ask Theophilus, the cgg.org research assistant.</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="chat-option" data-mode="search" data-url="https://www.cgg.org/index.cfm/search/results">
-                                        <div>
-                                            <div class="title">Search</div>
-                                            <div class="description">Search cgg.org. Powered by Google</div>
+                                        <div class="chat-option" data-mode="search" data-url="https://www.cgg.org/index.cfm/search/results">
+                                            <svg class="check-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13.5 3.5L6 11 2.5 7.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="option-content">
+                                                <div class="title">Search</div>
+                                                <div class="description">Search cgg.org. Powered by Google</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="chat-option selected" data-mode="auto" data-url="https://www.cgg.org/index.cfm/search/results">
-                                        <div>
-                                            <div class="title">Auto</div>
-                                            <div class="description">Combine asking Theophilus and site search for comprehensive results.</div>
+                                        <div class="chat-option selected" data-mode="auto" data-url="https://www.cgg.org/index.cfm/search/results">
+                                            <svg class="check-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13.5 3.5L6 11 2.5 7.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="option-content">
+                                                <div class="title">Auto</div>
+                                                <div class="description">Combine asking Theophilus and site search for comprehensive results.</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <input type="text" class="search-text-box" name="q" id="search-title" autocomplete="off">
                             </div>
-                            <input type="text" class="search-text-box" name="q" id="search-title" autocomplete="off">
                             <input type="hidden" name="rid" id="rid">
                             <input type="hidden" name="rct" id="rct">
                             <input type="hidden" name="mode" value="auto">
