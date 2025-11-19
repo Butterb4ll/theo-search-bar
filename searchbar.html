@@ -336,6 +336,7 @@
         const chatOptions = document.querySelector('.chat-options');
         const form = document.getElementById('ask-search-form');
         const modeInput = form.querySelector('input[name="mode"]');
+        const searchInput = document.getElementById('search-title');
 
         // Load saved mode from LocalStorage on DOM load
         document.addEventListener('DOMContentLoaded', () => {
@@ -350,9 +351,16 @@
             }
         });
 
+        // Toggle dropdown when clicking the button
         autoButton.addEventListener('click', (event) => {
+            event.preventDefault();
             event.stopPropagation();
             chatOptions.classList.toggle('active');
+        });
+
+        // Prevent clicks on the button container from focusing the input
+        autoButton.addEventListener('mousedown', (event) => {
+            event.preventDefault();
         });
 
         // Close the menu when clicking outside
@@ -362,16 +370,29 @@
             }
         });
 
+        // Prevent dropdown from closing when clicking inside it
+        chatOptions.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
         // Handle chat option selection
         document.querySelectorAll('.chat-option').forEach(option => {
-            option.addEventListener('click', () => {
+            option.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Update selection
                 document.querySelectorAll('.chat-option').forEach(opt => opt.classList.remove('selected'));
                 option.classList.add('selected');
+
+                // Update form and button
                 const mode = option.dataset.mode;
                 buttonText.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
                 form.action = option.dataset.url;
                 modeInput.value = mode;
                 localStorage.setItem('selectedMode', mode);
+
+                // Close dropdown
                 chatOptions.classList.remove('active');
             });
         });
